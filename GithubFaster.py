@@ -3,6 +3,7 @@ import ctypes, sys
 import sys
 import requests
 import os
+import platform
 
 hostsfile = "C:\Windows\System32\drivers\etc\hosts"
 
@@ -41,6 +42,9 @@ def changebackhosts():
     else:
         print("备份文件不存在，不能执行命令，执行失败")
     
+if(platform.system() == "Linux"):
+    print("暂不支持Linux系统，程序即将退出")
+    sys.exit()
 
 def is_admin():
     try:
