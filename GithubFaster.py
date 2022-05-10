@@ -41,21 +41,28 @@ def changebackhosts():
         print("检测到备份文件存在，命令已经成功执行")
     else:
         print("备份文件不存在，不能执行命令，执行失败")
-    
-if(platform.system() == "Linux"):
-    print("暂不支持Linux系统，程序即将退出")
-    sys.exit()
 
 def is_admin():
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
         return False
-if is_admin():
+    
+if(platform.system() == "Linux"):
+    hostsfile = "/etc/hosts"
     welcome()
+elif(platform.system() == "Windows"): 
+    if is_admin():
+        welcome(platform.system())
+    else:
+        print("权限不足，尝试申请权限")
+        if sys.version_info[0] == 3:
+            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
+        else:#in python2.x
+            ctypes.windll.shell32.ShellExecuteW(None, u"runas", unicode(sys.executable), unicode(__file__), None, 1)
 else:
-    print("权限不足，尝试申请权限")
-    if sys.version_info[0] == 3:
-        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
-    else:#in python2.x
-        ctypes.windll.shell32.ShellExecuteW(None, u"runas", unicode(sys.executable), unicode(__file__), None, 1)
+    print("未知的系统，程序即将退出")
+    sys.exit()
+
+
+
