@@ -53,7 +53,7 @@ if(platform.system() == "Linux"):
     welcome()
 elif(platform.system() == "Windows"): 
     if is_admin():
-        welcome(platform.system())
+        welcome()
     else:
         print("权限不足，尝试申请权限")
         if sys.version_info[0] == 3:
